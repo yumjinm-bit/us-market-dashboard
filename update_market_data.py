@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, Optional, Tuple
 from zoneinfo import ZoneInfo
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "market-data.json"
 UA = "Mozilla/5.0 (compatible; us-market-dashboard/1.0; +https://github.com/)"
 YAHOO_BASE = "https://query1.finance.yahoo.com/v8/finance/chart/"
