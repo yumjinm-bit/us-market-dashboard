@@ -1,0 +1,113 @@
+name: Update market data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'update_market_data.py'
+      - '.github/workflows/update-market-data.yml'
+  schedule:
+    # GitHub cron is UTC. Run every 5 minutes to keep ETF/FX market timestamps within a 15-minute target when GitHub scheduling is timely. If markets are closed and
+    # source timestamps do not change, the script preserves the old data file
+    # so no unnecessary commit is created. Scheduled runs can still be delayed.
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data-update
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch market data
+        run: python update_market_data.py
+
+      - name: Validate generated JSON
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p = pathlib.Path('market-data.json')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          assert d['schema_version'] == 3
+          assert isinstance(d['quotes'], dict)
+          assert d['health']['quote_ok_count'] >= 4
+          expected = ['VOO','QQQM','SCHD','VIX','USDKRW','JPYKRW','EURKRW']
+          for key in expected:
+              assert key in d['quotes']
+              q = d['quotes'][key]
+              if q.get('ok'):
+                  assert q.get('price') is not None and q['price'] > 0
+                  assert q.get('market_time')
+                  assert q.get('source_class') == 'unofficial_market_data'
+
+          # Broad sanity ranges to catch a wrong symbol/unit rather than publishing it.
+          ranges = {
+              'VOO': (50, 5000), 'QQQM': (20, 2000), 'SCHD': (5, 500),
+              'VIX': (1, 200), 'USDKRW': (500, 3000),
+              'JPYKRW': (300, 2000), 'EURKRW': (500, 4000),
+          }
+          for key, (lo, hi) in ranges.items():
+              q = d['quotes'][key]
+              if q.get('ok'):
+                  assert lo < q['price'] < hi, (key, q['price'])
+
+          # Fund metrics are auto-refreshed separately. A source failure may leave them unavailable,
+          # but any published metric must be sane and explicitly sourced.
+          fm = d.get('fund_metrics', {})
+          for key in ['VOO','QQQM','SCHD']:
+              assert key in fm
+              m = fm[key]
+              if m.get('ok'):
+                  pe = m.get('pe_ttm'); y = m.get('yield_pct'); er = m.get('expense_ratio_pct')
+                  assert pe is None or 1 < pe < 100
+                  assert y is None or 0 <= y < 20
+                  assert er is None or 0 <= er < 5
+                  assert m.get('fetched_at')
+                  assert m.get('source_class') == 'unofficial_fundamentals'
+
+          # Recalculate daily change, 52-week distance, and YTD.
+          for key in expected:
+              q = d['quotes'][key]
+              if q.get('ok') and q.get('previous_close'):
+                  calc_ch = q['price'] - q['previous_close']
+                  calc_pct = calc_ch / q['previous_close'] * 100.0
+                  assert abs(calc_ch - q['change']) < 0.001
+                  assert abs(calc_pct - q['change_pct']) < 0.001
+                  assert q.get('previous_close_source') in ('previous_completed_daily_close','cross_rate_components')
+          for key in ['VOO','QQQM','SCHD']:
+              q = d['quotes'][key]
+              if q.get('ok') and q.get('high_52w'):
+                  calc = (q['price'] / q['high_52w'] - 1.0) * 100.0
+                  assert abs(calc - q['from_52w_high_pct']) < 0.001
+              if q.get('ok') and q.get('ytd_base_price'):
+                  calc_ytd = (q['price'] / q['ytd_base_price'] - 1.0) * 100.0
+                  assert abs(calc_ytd - q['ytd_price_return_pct']) < 0.001
+                  assert q.get('ytd_base_date')
+          print('validation OK')
+          PY
+
+      - name: Commit data only when changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add market-data.json
+          if git diff --cached --quiet; then
+            echo 'No market-data change.'
+            exit 0
+          fi
+          git commit -m 'chore: refresh market data'
+          git push
