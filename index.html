@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="dark"/>
-<title>미국 주식 · 환율 · VIX · KRX 금 대시보드</title>
+<title>미국 주식 · 환율 · VIX 대시보드</title>
 <style>
 :root{
   --bg:#020617;--bg2:#07101f;--panel:#0f172a;--panel2:#0b1324;--line:#233047;
@@ -17,7 +17,7 @@ button,a{font:inherit}.wrap{max-width:1240px;margin:auto;padding:18px}.top{displ
 .section{margin-top:18px}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:0 2px 10px}.section-title{font-size:15px;font-weight:900}.section-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.55}.statusline{font-size:10px;color:var(--subtle);text-align:right}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card,.panel{background:rgba(15,23,42,.94);border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 40px #0003}.card{padding:15px;min-width:0}.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.ticker{font-size:14px;font-weight:900;letter-spacing:.02em}.name{font-size:10px;color:var(--muted);margin-top:3px}.source-chip{font-size:9px;color:#93c5fd;border:1px solid #1e3a8a;background:#0b1d43;padding:5px 7px;border-radius:999px;white-space:nowrap}.price-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-top:16px}.price{font-size:30px;font-weight:900;letter-spacing:-.03em}.unit{font-size:11px;color:var(--muted);font-weight:700}.change{font-size:13px;font-weight:800}.pos{color:var(--green)}.neg{color:var(--red)}.flat{color:#cbd5e1}.placeholder{color:#64748b}.asof{font-size:10px;color:var(--muted);margin-top:6px;min-height:15px}.age{font-size:9px;color:var(--subtle)}
 .metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:13px}.metric{border:1px solid #1e293b;border-radius:12px;background:#0a1426;padding:10px;min-width:0}.metric-label{font-size:9px;color:var(--muted);line-height:1.25}.metric-value{font-size:14px;font-weight:850;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric.subtle .metric-label,.metric.subtle .metric-value{color:var(--subtle)}.metric-note{font-size:8.5px;color:#64748b;margin-top:4px;line-height:1.3}.spark{height:72px;margin-top:12px;border-top:1px solid #162237;padding-top:8px}.spark svg{display:block;width:100%;height:64px}.spark-empty{height:64px;display:grid;place-items:center;color:#64748b;font-size:10px}.footerline{margin-top:11px;padding-top:10px;border-top:1px solid #1e293b;font-size:9px;color:#64748b;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.official-link{color:#93c5fd;text-decoration:none}.official-link:hover{text-decoration:underline}
-.vix-guide{font-size:10px;color:var(--muted);line-height:1.55;margin-top:11px}.krx-warning{margin-top:12px;border:1px solid #713f12;background:#2b1706;border-radius:12px;padding:11px;color:#fde68a;font-size:10px;line-height:1.6}.krx-ok{border-color:#14532d;background:#052e1b;color:#a7f3d0}
+.vix-guide{font-size:10px;color:var(--muted);line-height:1.55;margin-top:11px}.vix-single{max-width:620px}
 .chart-panel{padding:15px}.chart-controls{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:10px}.select,.period{border:1px solid var(--line);background:#0b1220;color:#e5e7eb;border-radius:9px;padding:7px 9px;font-size:11px}.period{cursor:pointer}.period.active{border-color:#2563eb;background:#172554;color:#bfdbfe}.chart-box{height:330px;margin-top:12px;border:1px solid #1e293b;border-radius:13px;background:#08111f;overflow:hidden}.chart-box svg{width:100%;height:100%;display:block}.chart-empty{height:100%;display:grid;place-items:center;color:#64748b;font-size:11px}.chart-meta{font-size:9px;color:#64748b;margin-top:8px;line-height:1.5}
 .audit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.audit-item{background:#0b1324;border:1px solid #1e293b;border-radius:12px;padding:12px}.audit-item b{font-size:11px}.audit-item p{font-size:10px;color:var(--muted);line-height:1.6;margin:7px 0 0}.foot{padding:22px 0 10px;color:#64748b;font-size:10px;line-height:1.7;text-align:center}
 @media(max-width:980px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3,.grid2,.audit{grid-template-columns:1fr}.statusline{text-align:left}.section-head{align-items:flex-start;flex-direction:column}.chart-box{height:300px}}
@@ -27,17 +27,17 @@ button,a{font:inherit}.wrap{max-width:1240px;margin:auto;padding:18px}.top{displ
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><div class="logo">US</div><div><div class="title">미국 주식 및 글로벌 지표 센터</div><div class="sub">VOO · QQQM · SCHD · 환율 · VIX · KRX 금</div></div></div>
+    <div class="brand"><div class="logo">US</div><div><div class="title">미국 주식 및 글로벌 지표 센터</div><div class="sub">VOO · QQQM · SCHD · 환율 · VIX</div></div></div>
     <div class="actions"><span id="healthBadge" class="badge">● 데이터 확인 중</span><button class="btn" id="refreshBtn">↻ 새로고침</button></div>
   </header>
 
   <div class="notice">
     <b class="safe">임의 시세값은 표시하지 않습니다.</b> VOO·QQQM·SCHD·VIX·환율은 GitHub Actions가 서버에서 시장 데이터를 받아 <b>15분 간격을 목표로 갱신</b>합니다. 데이터 수집이 실패하거나 오래되면 숫자 대신 경고를 표시합니다.<br>
-    <span class="danger">“실시간”을 보장하지 않습니다.</span> Yahoo Finance chart endpoint는 공식 유료 피드가 아니며 종목/시장에 따라 지연될 수 있습니다. 모든 카드에 실제 데이터 기준 시각을 표시합니다. KRX 금은 안전한 공식 연결이 없으면 가격을 억지로 채우지 않습니다.
+    <span class="danger">“실시간”을 보장하지 않습니다.</span> Yahoo Finance chart endpoint는 비공식 시장데이터 피드이며 종목/시장에 따라 지연될 수 있습니다. <b>일일 등락은 직전 완료 거래일 종가와 비교</b>하고, 연초 대비(YTD)는 <b>전년도 마지막 거래일 종가 대비 가격 변화</b>로 계산합니다. 주문 직전에는 증권사 호가창과 대조하세요.
   </div>
 
   <section class="section">
-    <div class="section-head"><div><div class="section-title">미국 ETF</div><div class="section-desc">현재가 · 등락 · 실제 1년 일봉에서 계산한 52주 고점 대비 · 운용사 공식 공시 지표</div></div><div id="updateStatus" class="statusline">데이터 파일 확인 중…</div></div>
+    <div class="section-head"><div><div class="section-title">미국 ETF</div><div class="section-desc">현재가 · 일일 등락 · 연초 대비(YTD, 배당 제외 가격 기준) · 실제 1년 일봉 52주 고점 대비 · 운용사 공식 공시 지표</div></div><div id="updateStatus" class="statusline">데이터 파일 확인 중…</div></div>
     <div id="etfGrid" class="grid3"></div>
   </section>
 
@@ -47,8 +47,8 @@ button,a{font:inherit}.wrap{max-width:1240px;margin:auto;padding:18px}.top{displ
   </section>
 
   <section class="section">
-    <div class="section-head"><div><div class="section-title">VIX · KRX 금</div><div class="section-desc">TradingView 제한 위젯을 제거했습니다. VIX는 데이터 파일에서 직접 표시하고, KRX 금은 공식 데이터만 허용합니다.</div></div></div>
-    <div class="grid2"><div id="vixCard"></div><div id="krxCard"></div></div>
+    <div class="section-head"><div><div class="section-title">VIX</div><div class="section-desc">외부 임베드 없이 자동 수집된 데이터 파일에서 직접 표시합니다.</div></div></div>
+    <div id="vixCard" class="vix-single"></div>
   </section>
 
   <section class="section">
@@ -68,7 +68,7 @@ button,a{font:inherit}.wrap{max-width:1240px;margin:auto;padding:18px}.top{displ
       <div class="section-title">데이터 안전장치</div><div class="section-desc">투자 판단용 화면이므로 데이터 출처와 실패 상태를 숨기지 않습니다.</div>
       <div class="audit" style="margin-top:12px">
         <div class="audit-item"><b>① 가짜값 금지</b><p>수집 실패 시 이전에 임의로 만든 숫자를 대신 보여주지 않습니다. 값이 없으면 “데이터 없음”으로 표시합니다.</p></div>
-        <div class="audit-item"><b>② 시세 시각 공개</b><p>페이지를 연 시각이 아니라, 원 데이터가 가진 시장 시각을 카드 아래에 표시합니다. 자동 업데이트 자체가 오래되면 상단이 빨간 경고로 바뀝니다.</p></div>
+        <div class="audit-item"><b>② 시세 시각·기준 공개</b><p>페이지를 연 시각이 아니라 원 데이터 시장 시각을 표시합니다. 일일 등락은 직전 완료 거래일 종가, YTD는 전년도 마지막 거래일 종가를 기준으로 계산합니다.</p></div>
         <div class="audit-item"><b>③ 공시 지표는 기준일 표시</b><p>PER·배당/분배 수익률·총보수는 실시간 시세가 아닙니다. 운용사 공식 공시값과 기준일을 함께 표시합니다.</p></div>
       </div>
     </div>
@@ -110,10 +110,11 @@ function quoteHeader(q, displayCurrency='USD', unit=''){
 function etfCard(key){
   const q=DATA?.quotes?.[key]||{}, f=FUND[key];
   const dist=q?.ok&&Number.isFinite(Number(q.from_52w_high_pct))?Math.min(0,Number(q.from_52w_high_pct)):null;
-  return `<article class="card"><div class="card-top"><div><div class="ticker">${key}</div><div class="name">${esc(f.name)}</div></div><span class="source-chip">시세: Yahoo</span></div>
+  return `<article class="card"><div class="card-top"><div><div class="ticker">${key}</div><div class="name">${esc(f.name)}</div></div><span class="source-chip">Yahoo 비공식 시세</span></div>
   ${quoteHeader(q,'USD')}
   <div class="metric-grid">
     <div class="metric"><div class="metric-label">52주 고점 대비 하락률</div><div class="metric-value ${dist===null?'placeholder':'neg'}">${dist===null?'—':dist.toFixed(2)+'%'}</div><div class="metric-note">52주 고점 ${q?.high_52w?('$'+n(q.high_52w,2)):'—'} · 실제 1년 일봉 계산</div></div>
+    <div class="metric"><div class="metric-label">연초 대비 가격 등락률 (YTD)</div><div class="metric-value ${Number.isFinite(Number(q?.ytd_price_return_pct))?chClass(q.ytd_price_return_pct):'placeholder'}">${Number.isFinite(Number(q?.ytd_price_return_pct))?pct(q.ytd_price_return_pct):'—'}</div><div class="metric-note">배당 제외 · 기준 ${q?.ytd_base_date||'—'} 종가 ${q?.ytd_base_price?('$'+n(q.ytd_base_price,2)):'—'}</div></div>
     <div class="metric"><div class="metric-label">PER · 운용사 공시</div><div class="metric-value">${f.pe.v.toFixed(2)}배</div><div class="metric-note">${f.pe.d} 기준</div></div>
     <div class="metric subtle"><div class="metric-label">${esc(f.y.label)}</div><div class="metric-value">${f.y.v.toFixed(2)}%</div><div class="metric-note">${f.y.d} 기준</div></div>
     <div class="metric subtle"><div class="metric-label">총보수</div><div class="metric-value">${f.fee.v.toFixed(2)}%</div><div class="metric-note">${f.fee.d} 기준</div></div>
@@ -122,23 +123,18 @@ function etfCard(key){
 }
 function fxCard(key,title,subtitle,unit){
   const q=DATA?.quotes?.[key]||{};
-  return `<article class="card"><div class="card-top"><div><div class="ticker">${esc(title)}</div><div class="name">${esc(subtitle)}</div></div><span class="source-chip">Yahoo</span></div>${quoteHeader(q,'KRW',unit)}<div class="spark">${spark(q.history_1y)}</div><div class="footerline"><span>자동 갱신 목표 15분</span><span>${q?.source?esc(q.source):'데이터 대기'}</span></div></article>`;
+  return `<article class="card"><div class="card-top"><div><div class="ticker">${esc(title)}</div><div class="name">${esc(subtitle)}</div></div><span class="source-chip">Yahoo 비공식</span></div>${quoteHeader(q,'KRW',unit)}<div class="spark">${spark(q.history_1y)}</div><div class="footerline"><span>자동 갱신 목표 15분</span><span>${q?.source?esc(q.source):'데이터 대기'}</span></div></article>`;
 }
 function vixCard(){
   const q=DATA?.quotes?.VIX||{}; let band='—'; const v=Number(q.price); if(Number.isFinite(v)){band=v<15?'낮은 변동성':v<20?'보통':v<30?'높은 변동성':'매우 높은 변동성'}
-  return `<article class="card"><div class="card-top"><div><div class="ticker">VIX</div><div class="name">CBOE Volatility Index</div></div><span class="source-chip">Yahoo</span></div>${quoteHeader(q,'INDEX')}
+  return `<article class="card"><div class="card-top"><div><div class="ticker">VIX</div><div class="name">CBOE Volatility Index</div></div><span class="source-chip">Yahoo 비공식</span></div>${quoteHeader(q,'INDEX')}
   <div class="metric-grid"><div class="metric"><div class="metric-label">현재 구간</div><div class="metric-value">${esc(band)}</div><div class="metric-note">단순 해석 가이드이며 공식 등급이 아님</div></div><div class="metric"><div class="metric-label">52주 범위</div><div class="metric-value small">${q.low_52w?n(q.low_52w,2):'—'} ~ ${q.high_52w?n(q.high_52w,2):'—'}</div></div></div>
   <div class="spark">${spark(q.history_1y)}</div><div class="vix-guide">참고 가이드: 15 미만 낮음 · 15~20 보통 · 20~30 높음 · 30 이상 매우 높음.</div><div class="footerline"><span>시세 출처는 비공식 데이터 피드</span><span>주문 판단 전 증권사/공식 시세 대조</span></div></article>`;
-}
-function krxCard(){
-  const g=DATA?.krx_gold||{}; const ok=g.ok&&Number.isFinite(Number(g.price));
-  const body=ok?`${quoteHeader({...g,previous_close:null},'KRW','원/g')}<div class="krx-warning krx-ok">${esc(g.message||'KRX 공식 일별 데이터')}</div>`:`<div class="price-row"><span class="price placeholder">가격 미표시</span></div><div class="asof">공식 연결이 확인되지 않아 숫자를 넣지 않았습니다.</div><div class="krx-warning">${esc(g.message||'KRX 공식 데이터 연결 필요')}</div>`;
-  return `<article class="card"><div class="card-top"><div><div class="ticker">KRX 금 99.99_1kg</div><div class="name">한국거래소 금현물 · 원/g</div></div><span class="source-chip">공식 데이터만</span></div>${body}<div class="metric-grid"><div class="metric"><div class="metric-label">데이터 정책</div><div class="metric-value small">임의·대체값 금지</div><div class="metric-note">다른 금 상품/미니금 가격을 대신 넣지 않음</div></div><div class="metric"><div class="metric-label">현재 연결</div><div class="metric-value small">${esc(g.status||'미설정')}</div><div class="metric-note">${esc(g.source||'KRX OPEN API')}</div></div></div><div class="footerline"><span>KRX 실시간 상업 피드와 별개</span><a class="official-link" href="https://data.krx.co.kr/" target="_blank" rel="noopener">KRX 공식 페이지 ↗</a></div></article>`;
 }
 function render(){
   $('#etfGrid').innerHTML=['VOO','QQQM','SCHD'].map(etfCard).join('');
   $('#fxGrid').innerHTML=fxCard('USDKRW','USD/KRW','미국 달러 / 대한민국 원','원/USD')+fxCard('JPYKRW','JPY/KRW','일본 엔 / 대한민국 원','원/100JPY')+fxCard('EURKRW','EUR/KRW','유로 / 대한민국 원','원/EUR');
-  $('#vixCard').innerHTML=vixCard(); $('#krxCard').innerHTML=krxCard();
+  $('#vixCard').innerHTML=vixCard();
   const h=isDataHealthy(); $('#healthBadge').className='badge '+h.cls; $('#healthBadge').textContent=h.text;
   const gen=DATA?.generated_at; $('#updateStatus').textContent=gen?`자동 수집 ${localDate(gen)} · ${ago(gen)} · 성공 ${DATA?.health?.quote_ok_count??'?'}/${DATA?.health?.quote_total??'?'}`:'첫 자동 수집 대기 중';
   renderChart();

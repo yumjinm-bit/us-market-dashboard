@@ -16,15 +16,15 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
-import os
 import sys
 import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, Iterable, Optional, Tuple
+from zoneinfo import ZoneInfo
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "market-data.json"
 UA = "Mozilla/5.0 (compatible; us-market-dashboard/1.0; +https://github.com/)"
 YAHOO_BASE = "https://query1.finance.yahoo.com/v8/finance/chart/"
@@ -136,17 +136,72 @@ def daily_history(result: Dict[str, Any], limit: int = 260) -> Tuple[list, Optio
     return points[-limit:], (max(valid_highs) if valid_highs else None), (min(valid_lows) if valid_lows else None)
 
 
+def _daily_close_pairs(result: Dict[str, Any]) -> list[tuple[int, float]]:
+    timestamps = result.get("timestamp") or []
+    quote = ((result.get("indicators") or {}).get("quote") or [{}])[0]
+    closes = quote.get("close") or []
+    pairs = []
+    for i, ts in enumerate(timestamps):
+        c = finite(closes[i]) if i < len(closes) else None
+        if c is not None:
+            pairs.append((int(ts), c))
+    return pairs
+
+
+def _local_date(ts: int, tz_name: Optional[str]) -> dt.date:
+    d = dt.datetime.fromtimestamp(int(ts), dt.timezone.utc)
+    try:
+        return d.astimezone(ZoneInfo(tz_name or "UTC")).date()
+    except Exception:
+        return d.date()
+
+
+def previous_completed_close(history: Dict[str, Any], market_ts: Optional[int], tz_name: Optional[str]) -> Tuple[Optional[float], Optional[str]]:
+    """Most recent completed daily close before the current market date.
+
+    Do NOT use Yahoo meta.chartPreviousClose here: with a multi-day range it is
+    the close before the requested range, not necessarily yesterday's close.
+    """
+    pairs = _daily_close_pairs(history)
+    if not pairs:
+        return None, None
+    if market_ts:
+        market_date = _local_date(int(market_ts), tz_name)
+        prior = [(ts, c) for ts, c in pairs if _local_date(ts, tz_name) < market_date]
+        if prior:
+            ts, c = prior[-1]
+            return c, _local_date(ts, tz_name).isoformat()
+    ts, c = pairs[-2] if len(pairs) >= 2 else pairs[-1]
+    return c, _local_date(ts, tz_name).isoformat()
+
+
+def ytd_reference(history: Dict[str, Any], market_ts: Optional[int], tz_name: Optional[str]) -> Tuple[Optional[float], Optional[str]]:
+    """Final valid close before Jan 1 of the current market year."""
+    pairs = _daily_close_pairs(history)
+    if not pairs:
+        return None, None
+    ref_ts = int(market_ts or pairs[-1][0])
+    year = _local_date(ref_ts, tz_name).year
+    cutoff = dt.date(year, 1, 1)
+    prior = [(ts, c) for ts, c in pairs if _local_date(ts, tz_name) < cutoff]
+    if not prior:
+        return None, None
+    ts, c = prior[-1]
+    return c, _local_date(ts, tz_name).isoformat()
+
+
 def build_quote(symbol: str) -> Dict[str, Any]:
     intraday = yahoo_chart(symbol, "5d", "5m", True)
     history = yahoo_chart(symbol, "1y", "1d", False)
     meta = intraday.get("meta") or {}
 
     price, market_ts = last_valid_point(intraday)
-    prev = finite(meta.get("chartPreviousClose"))
+    hist_meta = history.get("meta") or {}
+    tz_name = meta.get("exchangeTimezoneName") or hist_meta.get("exchangeTimezoneName")
+    prev, prev_date = previous_completed_close(history, market_ts, tz_name)
+    ytd_base, ytd_base_date = ytd_reference(history, market_ts, tz_name)
     hist_points, high_52w, low_52w = daily_history(history)
 
-    # If Yahoo omitted a daily extreme, use the metadata only as a fallback.
-    hist_meta = history.get("meta") or {}
     if high_52w is None:
         high_52w = finite(hist_meta.get("fiftyTwoWeekHigh"))
     if low_52w is None:
@@ -162,6 +217,10 @@ def build_quote(symbol: str) -> Dict[str, Any]:
     if price is not None and high_52w not in (None, 0):
         high_distance = (price / high_52w - 1.0) * 100.0
 
+    ytd_price_return = None
+    if price is not None and ytd_base not in (None, 0):
+        ytd_price_return = (price / ytd_base - 1.0) * 100.0
+
     return {
         "ok": price is not None,
         "symbol": symbol,
@@ -169,13 +228,18 @@ def build_quote(symbol: str) -> Dict[str, Any]:
         "currency": meta.get("currency"),
         "price": round(price, 8) if price is not None else None,
         "previous_close": round(prev, 8) if prev is not None else None,
+        "previous_close_date": prev_date,
+        "previous_close_source": "previous_completed_daily_close",
         "change": round(change, 8) if change is not None else None,
         "change_pct": round(change_pct, 6) if change_pct is not None else None,
         "high_52w": round(high_52w, 8) if high_52w is not None else None,
         "low_52w": round(low_52w, 8) if low_52w is not None else None,
         "from_52w_high_pct": round(high_distance, 6) if high_distance is not None else None,
+        "ytd_base_price": round(ytd_base, 8) if ytd_base is not None else None,
+        "ytd_base_date": ytd_base_date,
+        "ytd_price_return_pct": round(ytd_price_return, 6) if ytd_price_return is not None else None,
         "market_time": iso_utc(market_ts),
-        "exchange_timezone": meta.get("exchangeTimezoneName"),
+        "exchange_timezone": tz_name,
         "history_1y": hist_points,
         "source": "Yahoo Finance chart endpoint",
         "source_class": "unofficial_market_data",
@@ -212,78 +276,20 @@ def cross_rate(a: Dict[str, Any], b: Dict[str, Any], op: str, symbol_name: str) 
         "currency": "KRW",
         "price": round(price, 8) if price is not None else None,
         "previous_close": round(prev, 8) if prev is not None else None,
+        "previous_close_date": None,
+        "previous_close_source": "cross_rate_components",
         "change": round(change, 8) if change is not None else None,
         "change_pct": round(change_pct, 6) if change_pct is not None else None,
         "high_52w": None,
         "low_52w": None,
         "from_52w_high_pct": None,
+        "ytd_base_price": None,
+        "ytd_base_date": None,
+        "ytd_price_return_pct": None,
         "market_time": min(market_times) if market_times else None,
         "history_1y": [],
         "source": f"Yahoo Finance cross rate ({a.get('symbol')} & {b.get('symbol')})",
         "source_class": "unofficial_market_data",
-    }
-
-
-def fetch_krx_gold_official() -> Dict[str, Any]:
-    """Optional KRX daily official API. This is NOT an intraday/real-time feed."""
-    key = os.environ.get("KRX_AUTH_KEY", "").strip()
-    if not key:
-        return {
-            "ok": False,
-            "price": None,
-            "change": None,
-            "change_pct": None,
-            "market_time": None,
-            "source": "KRX OPEN API",
-            "source_class": "official_daily",
-            "status": "KRX_AUTH_KEY_NOT_SET",
-            "message": "KRX 공식 Open API 인증키가 없어 가격을 표시하지 않습니다.",
-        }
-
-    today = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
-    last_error = None
-    for back in range(0, 10):
-        day = today - dt.timedelta(days=back)
-        if day.weekday() >= 5:
-            continue
-        bas = day.strftime("%Y%m%d")
-        url = "https://data-dbg.krx.co.kr/svc/apis/gen/gold_bydd_trd?" + urllib.parse.urlencode({"basDd": bas})
-        try:
-            req = urllib.request.Request(url, headers={"AUTH_KEY": key, "User-Agent": UA, "Accept": "application/json"})
-            with urllib.request.urlopen(req, timeout=18) as resp:
-                payload = json.loads(resp.read().decode("utf-8"))
-            rows = payload.get("OutBlock_1") or payload.get("output") or payload.get("data") or []
-            for row in rows:
-                name = str(row.get("ISU_NM") or "")
-                # Select the 1kg 99.99% product by the official product name.
-                # Do not rely on a guessed issue code because a wrong code could select another gold product.
-                if "99.99" in name and "1kg" in name.lower():
-                    price = finite(str(row.get("TDD_CLSPRC", "")).replace(",", ""))
-                    ch = finite(str(row.get("CMPPREVDD_PRC", "")).replace(",", ""))
-                    pct = finite(str(row.get("FLUC_RT", "")).replace(",", ""))
-                    return {
-                        "ok": price is not None,
-                        "price": price,
-                        "change": ch,
-                        "change_pct": pct,
-                        "market_time": f"{bas[:4]}-{bas[4:6]}-{bas[6:]}T15:30:00+09:00",
-                        "source": "KRX OPEN API · 금시장 일별매매정보",
-                        "source_class": "official_daily",
-                        "status": "DAILY_CLOSE",
-                        "message": "KRX 공식 일별 종가입니다. 장중 실시간 가격이 아닙니다.",
-                    }
-        except Exception as exc:  # noqa: BLE001
-            last_error = str(exc)
-    return {
-        "ok": False,
-        "price": None,
-        "change": None,
-        "change_pct": None,
-        "market_time": None,
-        "source": "KRX OPEN API",
-        "source_class": "official_daily",
-        "status": "NO_DATA",
-        "message": f"KRX 공식 데이터 조회 실패: {last_error or 'no recent row'}",
     }
 
 
@@ -297,11 +303,16 @@ def safe_fetch(key: str, symbol: str, errors: list) -> Dict[str, Any]:
             "symbol": symbol,
             "price": None,
             "previous_close": None,
+            "previous_close_date": None,
+            "previous_close_source": "previous_completed_daily_close",
             "change": None,
             "change_pct": None,
             "high_52w": None,
             "low_52w": None,
             "from_52w_high_pct": None,
+            "ytd_base_price": None,
+            "ytd_base_date": None,
+            "ytd_price_return_pct": None,
             "market_time": None,
             "history_1y": [],
             "source": "Yahoo Finance chart endpoint",
@@ -330,46 +341,27 @@ def main() -> int:
     if quotes["JPYKRW"].get("ok"):
         quotes["JPYKRW"] = scaled_quote(quotes["JPYKRW"], 100.0, "KRW per 100 JPY")
 
-    krx_gold = fetch_krx_gold_official()
 
+    generated = iso_utc()
     ok_count = sum(1 for v in quotes.values() if v.get("ok"))
-    health = {
-        "ok": ok_count >= 6,
-        "quote_ok_count": ok_count,
-        "quote_total": len(quotes),
-        "errors": errors,
-    }
-
-    # Avoid creating a new commit when the market/source data did not change.
-    # This also means generated_at is the last time the dashboard data actually changed,
-    # not merely the last time the workflow woke up.
-    previous = {}
-    if OUT.exists():
-        try:
-            previous = json.loads(OUT.read_text(encoding="utf-8"))
-        except Exception:
-            previous = {}
-    same_core = (
-        previous.get("quotes") == quotes
-        and previous.get("krx_gold") == krx_gold
-        and previous.get("health") == health
-    )
-    generated = previous.get("generated_at") if same_core and previous.get("generated_at") else iso_utc()
-
     payload = {
         "schema_version": 2,
         "generated_at": generated,
-        "refresh_policy": "GitHub Actions scheduled; target cadence 15 minutes. Scheduled runs can be delayed by GitHub.",
-        "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial source and may be delayed or unavailable. The dashboard shows source timestamps and stale warnings instead of fabricating values.",
+        "refresh_policy": "GitHub Actions scheduled; target cadence 15 minutes on weekdays. Runs can be delayed by GitHub.",
+        "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. The dashboard shows timestamps and stale warnings instead of fabricating values.",
         "quotes": quotes,
-        "krx_gold": krx_gold,
-        "health": health,
+        "health": {
+            "ok": ok_count >= 6,
+            "quote_ok_count": ok_count,
+            "quote_total": len(quotes),
+            "errors": errors,
+        },
     }
 
     tmp = OUT.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(OUT)
-    print(f"wrote {OUT} with {ok_count}/{len(quotes)} successful Yahoo quotes; KRX ok={krx_gold.get('ok')}")
+    print(f"wrote {OUT} with {ok_count}/{len(quotes)} successful Yahoo quotes")
     if errors:
         print(json.dumps(errors, ensure_ascii=False, indent=2), file=sys.stderr)
     return 0 if ok_count >= 4 else 2
