@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "generated_at": null,
+  "refresh_policy": "Waiting for the first GitHub Actions update.",
+  "dynamic_source_note": "No placeholder market numbers are stored in this initial file.",
+  "quotes": {
+    "VOO": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "QQQM": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "SCHD": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "VIX": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "USDKRW": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "JPYKRW": {"ok": false, "price": null, "market_time": null, "history_1y": []},
+    "EURKRW": {"ok": false, "price": null, "market_time": null, "history_1y": []}
+  },
+  "krx_gold": {
+    "ok": false,
+    "price": null,
+    "market_time": null,
+    "source": "KRX OPEN API",
+    "source_class": "official_daily",
+    "status": "WAITING",
+    "message": "KRX 공식 데이터는 임의값을 넣지 않습니다. 인증키가 없으면 가격을 표시하지 않습니다."
+  },
+  "health": {"ok": false, "quote_ok_count": 0, "quote_total": 7, "errors": []}
+}
