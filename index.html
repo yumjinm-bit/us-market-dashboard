@@ -5,56 +5,189 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>미국 주식 · 환율 · VIX · KRX 금 대시보드</title>
 <style>
-:root{--bg:#020617;--panel:#0f172a;--panel2:#111827;--border:#233047;--text:#f8fafc;--muted:#94a3b8;--blue:#3b82f6;--green:#34d399;--amber:#fbbf24}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#020617,#07101f 55%,#020617);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;min-height:100vh}a{color:#60a5fa}.wrap{max-width:1280px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:10px 0 18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#2563eb,#6366f1);display:grid;place-items:center;font-weight:900;box-shadow:0 10px 28px #1d4ed844}.title{font-size:20px;font-weight:900}.sub{font-size:12px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.badge{font-size:11px;color:#a7f3d0;border:1px solid #14532d;background:#052e1b;padding:7px 10px;border-radius:999px}.btn{border:1px solid var(--border);background:#111827;color:#e5e7eb;padding:8px 11px;border-radius:10px;font-weight:700;cursor:pointer}.notice{background:#0b1220;border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:11px;line-height:1.65;color:#cbd5e1;margin-bottom:14px}.notice b{color:#fff}.section{margin-top:16px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 2px 10px}.section-title{font-size:15px;font-weight:900}.section-desc{font-size:11px;color:var(--muted);margin-top:2px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.card{background:rgba(15,23,42,.92);border:1px solid var(--border);border-radius:16px;overflow:hidden;min-height:250px;box-shadow:0 14px 40px #0003}.card-head{padding:12px 14px 0}.card-title{font-size:12px;font-weight:900}.card-sub{font-size:10px;color:var(--muted);margin-top:2px}.widget{height:210px}.tiny{padding:8px 12px 10px;border-top:1px solid #1e293b;font-size:9.5px;color:#64748b;display:flex;justify-content:space-between;gap:8px}.chart-card{background:rgba(15,23,42,.92);border:1px solid var(--border);border-radius:16px;overflow:hidden;padding:0}.chart-wrap{height:560px}.table-card{background:rgba(15,23,42,.92);border:1px solid var(--border);border-radius:16px;overflow:hidden;padding:16px}.table-wrap{overflow:auto}.info-table{width:100%;border-collapse:collapse;min-width:760px}.info-table th,.info-table td{padding:12px 10px;border-bottom:1px solid #1e293b;font-size:12px}.info-table th{font-size:10px;color:var(--muted);text-align:left;text-transform:uppercase;letter-spacing:.04em}.info-table td.num,.info-table th.num{text-align:right}.foot{padding:20px 0 10px;color:#64748b;font-size:10px;line-height:1.6;text-align:center}.tv-credit{display:none}.statusline{font-size:10px;color:#64748b}.warn{color:#fcd34d}
-@media(max-width:980px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:1fr}.chart-wrap{height:520px}}@media(max-width:620px){.wrap{padding:12px}.top{align-items:flex-start;flex-direction:column}.grid4{grid-template-columns:1fr}.widget{height:220px}.chart-wrap{height:520px}.title{font-size:18px}}
+:root{
+  --bg:#020617;--panel:#0f172a;--panel2:#111827;--border:#233047;--text:#f8fafc;--muted:#94a3b8;
+  --subtle:#7d8da6;--green:#34d399;--amber:#fbbf24;--red:#fb7185;--blue:#3b82f6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#020617,#07101f 55%,#020617);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;min-height:100vh}
+a{color:#60a5fa}
+.wrap{max-width:1280px;margin:auto;padding:18px}
+.top{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:10px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#2563eb,#6366f1);display:grid;place-items:center;font-weight:900;box-shadow:0 10px 28px #1d4ed844}
+.title{font-size:20px;font-weight:900}.sub{font-size:12px;color:var(--muted);margin-top:3px}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.badge{font-size:11px;color:#a7f3d0;border:1px solid #14532d;background:#052e1b;padding:7px 10px;border-radius:999px}.btn{border:1px solid var(--border);background:#111827;color:#e5e7eb;padding:8px 11px;border-radius:10px;font-weight:700;cursor:pointer}
+.notice{background:#0b1220;border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:11px;line-height:1.65;color:#cbd5e1;margin-bottom:14px}.notice b{color:#fff}
+.section{margin-top:16px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 2px 10px}.section-title{font-size:15px;font-weight:900}.section-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.statusline{font-size:10px;color:#64748b}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card,.chart-card,.table-card{background:rgba(15,23,42,.92);border:1px solid var(--border);border-radius:16px;box-shadow:0 14px 40px #0003}
+.card{overflow:hidden}.card-head{padding:12px 14px 0}.card-title{font-size:12px;font-weight:900}.card-sub{font-size:10px;color:var(--muted);margin-top:2px}.card-body{padding:0 14px 14px}
+.widget{height:96px}.mini-widget{height:210px}.chart-widget{height:280px}.chart-wrap{height:560px}
+.metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.metric{padding:10px 11px;border:1px solid #1e293b;border-radius:12px;background:#0c1628}
+.metric .label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.metric .value{display:block;font-size:15px;font-weight:800;letter-spacing:-.01em}.metric.subtle .label,.metric.subtle .value{color:var(--subtle)}
+.metric .value.small{font-size:13px}.down{color:#fbbf24}.up{color:var(--green)}
+.tiny{padding:8px 12px 10px;border-top:1px solid #1e293b;font-size:9.5px;color:#64748b;display:flex;justify-content:space-between;gap:8px}
+.chart-card{overflow:hidden;padding:0}.table-card{overflow:hidden;padding:16px}.table-wrap{overflow:auto}
+.info-table{width:100%;border-collapse:collapse;min-width:760px}.info-table th,.info-table td{padding:12px 10px;border-bottom:1px solid #1e293b;font-size:12px}.info-table th{font-size:10px;color:var(--muted);text-align:left;text-transform:uppercase;letter-spacing:.04em}.info-table td.num,.info-table th.num{text-align:right}
+.foot{padding:20px 0 10px;color:#64748b;font-size:10px;line-height:1.6;text-align:center}.warn{color:#fcd34d}
+.helper{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.helper-card{padding:14px;border:1px solid var(--border);border-radius:14px;background:#0c1628}.helper-title{font-size:12px;font-weight:800;margin-bottom:7px}.helper-card p{font-size:11px;color:#cbd5e1;line-height:1.6;margin:0}.helper-card span{color:var(--muted)}
+@media(max-width:980px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3,.grid2,.helper{grid-template-columns:1fr}.chart-wrap{height:520px}}
+@media(max-width:620px){.wrap{padding:12px}.top{align-items:flex-start;flex-direction:column}.grid4{grid-template-columns:1fr}.mini-widget{height:220px}.chart-wrap{height:520px}.title{font-size:18px}.metric-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><div class="logo">US</div><div><div class="title">미국 주식 및 글로벌 지표 센터</div><div class="sub">VOO · QQQM · SCHD · 환율 · VIX · KRX 금</div></div></div>
-    <div class="actions"><span class="badge">● TradingView 공식 위젯 연결</span><button class="btn" onclick="location.reload()">↻ 새로고침</button></div>
+    <div class="brand">
+      <div class="logo">US</div>
+      <div>
+        <div class="title">미국 주식 및 글로벌 지표 센터</div>
+        <div class="sub">VOO · QQQM · SCHD · 환율 · VIX · KRX 금</div>
+      </div>
+    </div>
+    <div class="actions"><span class="badge">● GitHub Pages 배포 버전</span><button class="btn" onclick="location.reload()">↻ 새로고침</button></div>
   </header>
 
-  <div class="notice"><b>이번 버전은 API 키가 없습니다.</b> 로컬 HTML이 Yahoo/네이버 금융 API를 직접 호출하지 않고 TradingView 공식 임베드 위젯이 시세를 직접 표시합니다. 그래서 이전 버전의 CORS 차단 문제를 피합니다. 아래의 작은 시간은 <b>시장 시세 시각이 아니라 이 페이지/위젯을 연결한 시각</b>입니다. 실제 시세 지연 수준은 거래소와 TradingView 데이터 등급에 따라 달라질 수 있습니다. 아이폰에서는 ChatGPT/파일 앱 미리보기보다 Safari 또는 Chrome에서 여는 것을 권장합니다.</div>
+  <div class="notice">
+    <b>현재가/등락률은 TradingView 위젯 표시를 사용</b>하고, <b>PER·배당수익률·총보수·52주 고점 대비 하락률은 참고용 요약값</b>으로 함께 보여줍니다.<br>
+    아래의 작은 시간은 <b>이 페이지가 위젯을 불러온 시각</b>입니다. 실제 시세 지연 여부는 TradingView 및 거래소 제공 조건에 따라 달라질 수 있습니다.
+  </div>
 
   <section class="section">
-    <div class="section-head"><div><div class="section-title">미국 ETF</div><div class="section-desc">현재가, 등락률, 미니 차트</div></div><div class="statusline">위젯은 자체적으로 시세를 갱신합니다.</div></div>
+    <div class="section-head">
+      <div>
+        <div class="section-title">미국 ETF 요약</div>
+        <div class="section-desc">현재가 / 등락률 / 52주 고점 대비 하락률 / PER / 배당수익률 / 총보수</div>
+      </div>
+      <div class="statusline">배당수익률·총보수는 보조 참고지표로 더 연한 색상으로 표시했습니다.</div>
+    </div>
+
     <div class="grid3">
-      <article class="card"><div class="card-head"><div class="card-title">VOO</div><div class="card-sub">Vanguard S&P 500 ETF</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"AMEX:VOO","width":"100%","height":"100%","locale":"kr","dateRange":"12M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":false}</script></div></div><div class="tiny"><span>TradingView</span><span class="connected-time"></span></div></article>
-      <article class="card"><div class="card-head"><div class="card-title">QQQM</div><div class="card-sub">Invesco NASDAQ 100 ETF</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"NASDAQ:QQQM","width":"100%","height":"100%","locale":"kr","dateRange":"12M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":false}</script></div></div><div class="tiny"><span>TradingView</span><span class="connected-time"></span></div></article>
-      <article class="card"><div class="card-head"><div class="card-title">SCHD</div><div class="card-sub">Schwab U.S. Dividend Equity ETF</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"AMEX:SCHD","width":"100%","height":"100%","locale":"kr","dateRange":"12M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":false}</script></div></div><div class="tiny"><span>TradingView</span><span class="connected-time"></span></div></article>
+      <article class="card">
+        <div class="card-head"><div class="card-title">VOO</div><div class="card-sub">Vanguard S&amp;P 500 ETF</div></div>
+        <div class="card-body">
+          <div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>{"symbol":"AMEX:VOO","width":"100%","locale":"kr","colorTheme":"dark","isTransparent":true}</script></div></div>
+          <div class="metric-grid">
+            <div class="metric"><span class="label">52주 고점 대비 하락률</span><span class="value down">-1.5%</span></div>
+            <div class="metric"><span class="label">PER</span><span class="value">25.10배</span></div>
+            <div class="metric subtle"><span class="label">배당수익률</span><span class="value small">1.3%</span></div>
+            <div class="metric subtle"><span class="label">총보수</span><span class="value small">0.03%</span></div>
+          </div>
+        </div>
+        <div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><div class="card-title">QQQM</div><div class="card-sub">Invesco NASDAQ 100 ETF</div></div>
+        <div class="card-body">
+          <div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>{"symbol":"NASDAQ:QQQM","width":"100%","locale":"kr","colorTheme":"dark","isTransparent":true}</script></div></div>
+          <div class="metric-grid">
+            <div class="metric"><span class="label">52주 고점 대비 하락률</span><span class="value down">-2.8%</span></div>
+            <div class="metric"><span class="label">PER</span><span class="value">36.52배</span></div>
+            <div class="metric subtle"><span class="label">배당수익률</span><span class="value small">0.6%</span></div>
+            <div class="metric subtle"><span class="label">총보수</span><span class="value small">0.15%</span></div>
+          </div>
+        </div>
+        <div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><div class="card-title">SCHD</div><div class="card-sub">Schwab U.S. Dividend Equity ETF</div></div>
+        <div class="card-body">
+          <div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>{"symbol":"AMEX:SCHD","width":"100%","locale":"kr","colorTheme":"dark","isTransparent":true}</script></div></div>
+          <div class="metric-grid">
+            <div class="metric"><span class="label">52주 고점 대비 하락률</span><span class="value down">-3.2%</span></div>
+            <div class="metric"><span class="label">PER</span><span class="value">19.57배</span></div>
+            <div class="metric subtle"><span class="label">배당수익률</span><span class="value small">3.5%</span></div>
+            <div class="metric subtle"><span class="label">총보수</span><span class="value small">0.06%</span></div>
+          </div>
+        </div>
+        <div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div>
+      </article>
     </div>
   </section>
 
   <section class="section">
-    <div class="section-head"><div><div class="section-title">환율 · 변동성 · KRX 금</div><div class="section-desc">원/달러, 원/100엔 참고, 원/유로, VIX, KRX GOLD SPOT 99.99_1kg</div></div></div>
-    <div class="grid4">
-      <article class="card"><div class="card-head"><div class="card-title">USD/KRW</div><div class="card-sub">미국 달러 / 대한민국 원</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:USDKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>TradingView</span><span class="connected-time"></span></div></article>
-      <article class="card"><div class="card-head"><div class="card-title">JPY/KRW</div><div class="card-sub">일본 엔 / 대한민국 원 <span class="warn">(표시는 1엔 기준일 수 있음)</span></div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:JPYKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>한국식 100엔 환산은 표시값 ×100</span><span class="connected-time"></span></div></article>
-      <article class="card"><div class="card-head"><div class="card-title">EUR/KRW</div><div class="card-sub">유로 / 대한민국 원</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:EURKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>TradingView</span><span class="connected-time"></span></div></article>
-      <article class="card"><div class="card-head"><div class="card-title">VIX</div><div class="card-sub">CBOE Volatility Index</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"CBOE:VIX","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>시세 지연 가능</span><span class="connected-time"></span></div></article>
+    <div class="section-head">
+      <div>
+        <div class="section-title">환율</div>
+        <div class="section-desc">원/달러 · 원/엔 · 원/유로</div>
+      </div>
     </div>
-    <div style="height:12px"></div>
-    <div class="grid4">
-      <article class="card" style="grid-column:span 2"><div class="card-head"><div class="card-title">KRX 금 99.99_1kg</div><div class="card-sub">Korea Exchange · GOLD00001</div></div><div class="widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"KRX:GOLD00001","width":"100%","height":"100%","locale":"kr","dateRange":"12M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":false}</script></div></div><div class="tiny"><span>KRX GOLD SPOT 99.99_1kg</span><span class="connected-time"></span></div></article>
+    <div class="grid3">
+      <article class="card"><div class="card-head"><div class="card-title">USD/KRW</div><div class="card-sub">미국 달러 / 대한민국 원</div></div><div class="mini-widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:USDKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div></article>
+      <article class="card"><div class="card-head"><div class="card-title">JPY/KRW</div><div class="card-sub">일본 엔 / 대한민국 원 <span class="warn">(TradingView 표시는 1엔 기준일 수 있음)</span></div></div><div class="mini-widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:JPYKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>한국식 100엔 환산은 표시값 ×100</span><span class="connected-time"></span></div></article>
+      <article class="card"><div class="card-head"><div class="card-title">EUR/KRW</div><div class="card-sub">유로 / 대한민국 원</div></div><div class="mini-widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>{"symbol":"FX_IDC:EURKRW","width":"100%","height":"100%","locale":"kr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script></div></div><div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div></article>
     </div>
   </section>
 
   <section class="section">
-    <div class="section-head"><div><div class="section-title">상세 차트</div><div class="section-desc">좌측/상단 심볼 변경에서 VOO·QQQM·SCHD·환율·VIX·KRX 금을 선택할 수 있습니다. 하단 기간 버튼으로 1D·1M·1Y·5Y·전체 기간을 볼 수 있습니다.</div></div></div>
+    <div class="section-head">
+      <div>
+        <div class="section-title">VIX · KRX 금</div>
+        <div class="section-desc">이전처럼 “TradingView에서 확인”만 뜨지 않도록 차트형 위젯으로 변경했습니다.</div>
+      </div>
+    </div>
+    <div class="grid2">
+      <article class="card">
+        <div class="card-head"><div class="card-title">VIX</div><div class="card-sub">CBOE Volatility Index</div></div>
+        <div class="card-body">
+          <div class="metric-grid" style="margin-top:0;margin-bottom:10px">
+            <div class="metric"><span class="label">참고 포인트</span><span class="value">변동성 지수</span></div>
+            <div class="metric"><span class="label">해석 가이드</span><span class="value small">15↓ 낮음 · 20↑ 경계</span></div>
+          </div>
+          <div class="chart-widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{"autosize":true,"symbol":"CBOE:VIX","interval":"D","timezone":"Asia/Seoul","theme":"dark","backgroundColor":"rgba(15,23,42,1)","style":"3","withdateranges":false,"hide_side_toolbar":true,"allow_symbol_change":false,"save_image":false,"locale":"kr","hide_volume":true,"calendar":false,"support_host":"https://www.tradingview.com"}</script></div></div>
+        </div>
+        <div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><div class="card-title">KRX 금 99.99_1kg</div><div class="card-sub">Korea Exchange · GOLD00001</div></div>
+        <div class="card-body">
+          <div class="metric-grid" style="margin-top:0;margin-bottom:10px">
+            <div class="metric"><span class="label">참고 포인트</span><span class="value">국내 금 현물</span></div>
+            <div class="metric"><span class="label">활용</span><span class="value small">위험회피 · 원화 기준 체크</span></div>
+          </div>
+          <div class="chart-widget"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{"autosize":true,"symbol":"KRX:GOLD00001","interval":"D","timezone":"Asia/Seoul","theme":"dark","backgroundColor":"rgba(15,23,42,1)","style":"3","withdateranges":false,"hide_side_toolbar":true,"allow_symbol_change":false,"save_image":false,"locale":"kr","hide_volume":false,"calendar":false,"support_host":"https://www.tradingview.com"}</script></div></div>
+        </div>
+        <div class="tiny"><span>표시 시각</span><span class="connected-time"></span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-title">상세 차트</div>
+        <div class="section-desc">VOO · QQQM · SCHD · 환율 · VIX · KRX 금 심볼을 직접 바꿔가며 볼 수 있습니다.</div>
+      </div>
+    </div>
     <div class="chart-card"><div class="chart-wrap"><div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget" style="height:calc(100% - 28px);width:100%"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{"autosize":true,"symbol":"AMEX:VOO","interval":"D","timezone":"Asia/Seoul","theme":"dark","backgroundColor":"rgba(15,23,42,1)","style":"3","withdateranges":true,"hide_side_toolbar":true,"allow_symbol_change":true,"save_image":false,"locale":"kr","hide_volume":false,"watchlist":["AMEX:VOO","NASDAQ:QQQM","AMEX:SCHD","CBOE:VIX","FX_IDC:USDKRW","FX_IDC:JPYKRW","FX_IDC:EURKRW","KRX:GOLD00001"],"calendar":false,"support_host":"https://www.tradingview.com"}</script></div></div></div>
   </section>
 
   <section class="section">
-    <div class="table-card"><div class="section-title">PER 참고값</div><div class="section-desc">ETF PER은 실시간 시세가 아니라 운용사 공시 시점의 보유종목 가중 평균 성격입니다.</div><div class="table-wrap"><table class="info-table"><thead><tr><th>종목</th><th>ETF</th><th class="num">PER 참고</th><th class="num">기준일</th><th>비고</th></tr></thead><tbody><tr><td><b>VOO</b></td><td>Vanguard S&P 500 ETF</td><td class="num">25.10×</td><td class="num">2026-07-31</td><td>운용사 공시 기준 참고값</td></tr><tr><td><b>QQQM</b></td><td>Invesco NASDAQ 100 ETF</td><td class="num">36.52×</td><td class="num">2026-03-31</td><td>운용사 공시 기준 참고값</td></tr><tr><td><b>SCHD</b></td><td>Schwab U.S. Dividend Equity ETF</td><td class="num">19.57×</td><td class="num">2026-08-31</td><td>운용사 공시 기준 참고값</td></tr></tbody></table></div><div class="notice" style="margin:12px 0 0">정적 HTML + 무키 구조에서는 TradingView 위젯 내부의 값을 자바스크립트로 읽어 <b>52주 고점 대비 %를 별도 계산</b>할 수 없습니다(교차 출처 보안). 데이터가 실제로 뜨는 안정성을 우선한 버전입니다. 52주 고점은 상세 차트에서 1년 구간을 선택해 확인할 수 있습니다.</div></div>
+    <div class="table-card">
+      <div class="section-title">참고 사항</div>
+      <div class="section-desc">구매 판단에 도움이 되는 해석 포인트</div>
+      <div class="helper" style="margin-top:12px">
+        <div class="helper-card"><div class="helper-title">52주 고점 대비 하락률</div><p>현재 가격이 최근 52주 최고가보다 얼마나 아래에 있는지 보여줘. <span>숫자가 클수록 고점 대비 많이 내려온 상태</span>야.</p></div>
+        <div class="helper-card"><div class="helper-title">VIX</div><p>미국 시장의 변동성 체감 지표야. <span>보통 15 미만은 낮음, 15~20은 보통, 20 이상은 경계</span> 정도로 참고하면 돼.</p></div>
+        <div class="helper-card"><div class="helper-title">배당수익률 · 총보수</div><p>배당수익률은 특히 <span>SCHD 같은 배당 ETF</span>에서 의미가 크고, 총보수는 <span>장기 보유 비용</span>을 가늠하는 데 도움돼.</p></div>
+      </div>
+      <div class="notice" style="margin:14px 0 0">PER·배당수익률·총보수와 52주 고점 대비 하락률은 현재 버전에서 <b>참고용 고정 요약값</b>으로 넣었습니다. TradingView 위젯 자체에서 이 값을 직접 읽어올 수 없기 때문에, 나중에 원하면 별도 데이터 소스를 연결하는 방식으로 더 자동화할 수 있습니다.</div>
+    </div>
   </section>
 
   <footer class="foot">본 화면은 투자 참고용입니다. TradingView 위젯 데이터의 실시간/지연 여부는 거래소 및 데이터 제공 조건에 따라 달라질 수 있습니다.</footer>
 </div>
 <script>
-(function(){const now=new Date();const text='위젯 연결 '+now.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.querySelectorAll('.connected-time').forEach(el=>el.textContent=text);})();
+(function(){
+  const now = new Date();
+  const text = now.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.querySelectorAll('.connected-time').forEach(el=>el.textContent=text);
+})();
 </script>
 </body>
 </html>
