@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-10-22T02:56:21Z",
+  "generated_at": "2026-10-22T03:25:14Z",
   "refresh_policy": "GitHub Actions target cadence 5 minutes. GitHub scheduled runs can be delayed; UI marks ETF/FX quotes stale when their market timestamp exceeds 15 minutes.",
   "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial market-data source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. VIX is separately labeled because the public Yahoo/Cboe value can itself be delayed around 15 minutes.",
   "quotes": {
@@ -4133,19 +4133,19 @@
       "symbol": "KRW=X",
       "name": "USD/KRW",
       "currency": "KRW",
-      "price": 1323.65002441,
+      "price": 1323.08996582,
       "previous_close": 1323.93994141,
       "previous_close_date": "2026-10-21",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -0.28991699,
-      "change_pct": -0.021898,
+      "change": -0.84997559,
+      "change_pct": -0.0642,
       "high_52w": 1587.69995117,
       "low_52w": 1321.75,
-      "from_52w_high_pct": -16.630972,
+      "from_52w_high_pct": -16.666246,
       "ytd_base_price": 1437.91003418,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -7.946256,
-      "market_time": "2026-10-22T02:56:11Z",
+      "ytd_price_return_pct": -7.985205,
+      "market_time": "2026-10-22T03:25:03Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -5185,8 +5185,8 @@
           "c": 1323.93994141
         },
         {
-          "t": 1792637771,
-          "c": 1323.65002441
+          "t": 1792639503,
+          "c": 1323.08996582
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -5197,19 +5197,19 @@
       "symbol": "JPYKRW=X",
       "name": "JPY/KRW",
       "currency": "KRW",
-      "price": 836.499977,
+      "price": 836.699963,
       "previous_close": 835.967255,
       "previous_close_date": "2026-10-21",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 0.532722,
-      "change_pct": 0.063725,
+      "change": 0.732708,
+      "change_pct": 0.087648,
       "high_52w": 977.259159,
       "low_52w": 835.094547,
-      "from_52w_high_pct": -14.403465,
+      "from_52w_high_pct": -14.383001,
       "ytd_base_price": 919.34967,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -9.011772,
-      "market_time": "2026-10-22T02:54:28Z",
+      "ytd_price_return_pct": -8.990019,
+      "market_time": "2026-10-22T03:24:28Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -6249,8 +6249,8 @@
           "c": 835.967255
         },
         {
-          "t": 1792637668,
-          "c": 836.499977
+          "t": 1792639468,
+          "c": 836.699963
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -6262,19 +6262,19 @@
       "symbol": "EURKRW=X",
       "name": "EUR/KRW",
       "currency": "KRW",
-      "price": 1487.69995117,
+      "price": 1487.59997559,
       "previous_close": 1485.69995117,
       "previous_close_date": "2026-10-21",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 2.0,
-      "change_pct": 0.134617,
+      "change": 1.90002441,
+      "change_pct": 0.127887,
       "high_52w": 1807.42004395,
       "low_52w": 1483.30004883,
-      "from_52w_high_pct": -17.689308,
+      "from_52w_high_pct": -17.694839,
       "ytd_base_price": 1688.98999023,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -11.917776,
-      "market_time": "2026-10-22T02:54:28Z",
+      "ytd_price_return_pct": -11.923695,
+      "market_time": "2026-10-22T03:24:28Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -7314,8 +7314,8 @@
           "c": 1485.69995117
         },
         {
-          "t": 1792637668,
-          "c": 1487.69995117
+          "t": 1792639468,
+          "c": 1487.59997559
         }
       ],
       "source": "Yahoo Finance chart endpoint",
