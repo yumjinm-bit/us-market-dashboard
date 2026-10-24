@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-10-23T23:55:13Z",
+  "generated_at": "2026-10-24T00:26:16Z",
   "refresh_policy": "GitHub Actions target cadence 5 minutes. GitHub scheduled runs can be delayed; UI marks ETF/FX quotes stale when their market timestamp exceeds 15 minutes.",
   "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial market-data source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. VIX is separately labeled because the public Yahoo/Cboe value can itself be delayed around 15 minutes.",
   "quotes": {
@@ -9,19 +9,19 @@
       "symbol": "VOO",
       "name": "Vanguard S&P 500 ETF",
       "currency": "USD",
-      "price": 699.3773,
+      "price": 699.53,
       "previous_close": 702.29998779,
       "previous_close_date": "2026-10-22",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -2.92268779,
-      "change_pct": -0.416159,
+      "change": -2.76998779,
+      "change_pct": -0.394417,
       "high_52w": 718.4699707,
       "low_52w": 578.46002197,
-      "from_52w_high_pct": -2.657407,
+      "from_52w_high_pct": -2.636153,
       "ytd_base_price": 627.13000488,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 11.520306,
-      "market_time": "2026-10-23T23:54:48Z",
+      "ytd_price_return_pct": 11.544655,
+      "market_time": "2026-10-23T23:58:34Z",
       "exchange_timezone": "America/New_York",
       "history_1y": [
         {
@@ -1023,10 +1023,6 @@
         {
           "t": 1792675800,
           "c": 702.29998779
-        },
-        {
-          "t": 1792762200,
-          "c": 698.58001709
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -2051,10 +2047,6 @@
         {
           "t": 1792675800,
           "c": 290.13000488
-        },
-        {
-          "t": 1792762200,
-          "c": 290.05999756
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -2065,19 +2057,19 @@
       "symbol": "SCHD",
       "name": "Schwab U.S. Dividend Equity ETF",
       "currency": "USD",
-      "price": 35.2415,
+      "price": 35.24,
       "previous_close": 35.40000153,
       "previous_close_date": "2026-10-22",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -0.15850153,
-      "change_pct": -0.447744,
+      "change": -0.16000153,
+      "change_pct": -0.451982,
       "high_52w": 35.45000076,
       "low_52w": 26.31999969,
-      "from_52w_high_pct": -0.588154,
+      "from_52w_high_pct": -0.592386,
       "ytd_base_price": 27.43000031,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 28.477942,
-      "market_time": "2026-10-23T23:53:56Z",
+      "ytd_price_return_pct": 28.472474,
+      "market_time": "2026-10-23T23:59:02Z",
       "exchange_timezone": "America/New_York",
       "history_1y": [
         {
@@ -3079,10 +3071,6 @@
         {
           "t": 1792675800,
           "c": 35.40000153
-        },
-        {
-          "t": 1792762200,
-          "c": 35.27000046
         }
       ],
       "source": "Yahoo Finance chart endpoint",
