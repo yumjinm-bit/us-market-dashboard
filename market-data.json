@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-10-25T20:48:12Z",
+  "generated_at": "2026-10-25T21:09:42Z",
   "refresh_policy": "GitHub Actions target cadence 5 minutes. GitHub scheduled runs can be delayed; UI marks ETF/FX quotes stale when their market timestamp exceeds 15 minutes.",
   "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial market-data source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. VIX is separately labeled because the public Yahoo/Cboe value can itself be delayed around 15 minutes.",
   "quotes": {
@@ -5185,8 +5185,8 @@
           "c": 1325.98999023
         },
         {
-          "t": 1792958526,
-          "c": 1323.66003418
+          "t": 1792962015,
+          "c": 1323.60998535
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -6249,8 +6249,8 @@
           "c": 847.313595
         },
         {
-          "t": 1792960305,
-          "c": 841.600037
+          "t": 1792962405,
+          "c": 840.600014
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -7314,8 +7314,8 @@
           "c": 1485.47998047
         },
         {
-          "t": 1792960305,
-          "c": 1485.0
+          "t": 1792962405,
+          "c": 1484.80004883
         }
       ],
       "source": "Yahoo Finance chart endpoint",
