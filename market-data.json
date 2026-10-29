@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-10-29T17:54:00Z",
+  "generated_at": "2026-10-29T18:33:04Z",
   "refresh_policy": "GitHub Actions target cadence 5 minutes. GitHub scheduled runs can be delayed; UI marks ETF/FX quotes stale when their market timestamp exceeds 15 minutes.",
   "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial market-data source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. VIX is separately labeled because the public Yahoo/Cboe value can itself be delayed around 15 minutes.",
   "quotes": {
@@ -9,19 +9,19 @@
       "symbol": "VOO",
       "name": "Vanguard S&P 500 ETF",
       "currency": "USD",
-      "price": 705.03997803,
+      "price": 704.82501221,
       "previous_close": 709.90002441,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -4.86004639,
-      "change_pct": -0.68461,
+      "change": -5.07501221,
+      "change_pct": -0.714891,
       "high_52w": 718.4699707,
       "low_52w": 578.46002197,
-      "from_52w_high_pct": -1.869249,
+      "from_52w_high_pct": -1.899169,
       "ytd_base_price": 627.13000488,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 12.423257,
-      "market_time": "2026-10-29T17:53:49Z",
+      "ytd_price_return_pct": 12.388979,
+      "market_time": "2026-10-29T18:32:57Z",
       "exchange_timezone": "America/New_York",
       "history_1y": [
         {
@@ -1030,7 +1030,7 @@
         },
         {
           "t": 1793280600,
-          "c": 705.03997803
+          "c": 704.82501221
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -1041,19 +1041,19 @@
       "symbol": "QQQM",
       "name": "Invesco NASDAQ 100 ETF",
       "currency": "USD",
-      "price": 293.54000854,
+      "price": 293.26998901,
       "previous_close": 298.70999146,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -5.16998291,
-      "change_pct": -1.73077,
+      "change": -5.44000244,
+      "change_pct": -1.821165,
       "high_52w": 314.11499023,
       "low_52w": 228.75,
-      "from_52w_high_pct": -6.550143,
+      "from_52w_high_pct": -6.636105,
       "ytd_base_price": 252.91999817,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 16.060419,
-      "market_time": "2026-10-29T17:53:56Z",
+      "ytd_price_return_pct": 15.953658,
+      "market_time": "2026-10-29T18:32:56Z",
       "exchange_timezone": "America/New_York",
       "history_1y": [
         {
@@ -2062,7 +2062,7 @@
         },
         {
           "t": 1793280600,
-          "c": 293.54000854
+          "c": 293.26998901
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -2073,19 +2073,19 @@
       "symbol": "SCHD",
       "name": "Schwab U.S. Dividend Equity ETF",
       "currency": "USD",
-      "price": 35.40499878,
+      "price": 35.42990112,
       "previous_close": 35.09000015,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 0.31499863,
-      "change_pct": 0.897688,
+      "change": 0.33990097,
+      "change_pct": 0.968655,
       "high_52w": 35.56000137,
       "low_52w": 26.31999969,
-      "from_52w_high_pct": -0.43589,
+      "from_52w_high_pct": -0.365861,
       "ytd_base_price": 27.43000031,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 29.074001,
-      "market_time": "2026-10-29T17:53:54Z",
+      "ytd_price_return_pct": 29.164786,
+      "market_time": "2026-10-29T18:32:59Z",
       "exchange_timezone": "America/New_York",
       "history_1y": [
         {
@@ -3094,7 +3094,7 @@
         },
         {
           "t": 1793280600,
-          "c": 35.40499878
+          "c": 35.42990112
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -3105,19 +3105,19 @@
       "symbol": "^VIX",
       "name": "CBOE Volatility Index",
       "currency": "USD",
-      "price": 16.57999992,
+      "price": 16.85000038,
       "previous_close": 16.90999985,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": -0.32999992,
-      "change_pct": -1.951508,
+      "change": -0.05999947,
+      "change_pct": -0.354816,
       "high_52w": 35.29999924,
       "low_52w": 13.38000011,
-      "from_52w_high_pct": -53.031161,
+      "from_52w_high_pct": -52.266287,
       "ytd_base_price": 14.94999981,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": 10.903011,
-      "market_time": "2026-10-29T17:38:46Z",
+      "ytd_price_return_pct": 12.709034,
+      "market_time": "2026-10-29T18:17:46Z",
       "exchange_timezone": "America/Chicago",
       "history_1y": [
         {
@@ -4134,7 +4134,7 @@
         },
         {
           "t": 1793257200,
-          "c": 16.57999992
+          "c": 16.85000038
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -4145,19 +4145,19 @@
       "symbol": "KRW=X",
       "name": "USD/KRW",
       "currency": "KRW",
-      "price": 1339.02001953,
+      "price": 1338.92004395,
       "previous_close": 1326.81005859,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 12.20996094,
-      "change_pct": 0.920249,
+      "change": 12.10998535,
+      "change_pct": 0.912714,
       "high_52w": 1587.69995117,
       "low_52w": 1319.52001953,
-      "from_52w_high_pct": -15.662905,
+      "from_52w_high_pct": -15.669202,
       "ytd_base_price": 1437.91003418,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -6.877344,
-      "market_time": "2026-10-29T17:53:54Z",
+      "ytd_price_return_pct": -6.884297,
+      "market_time": "2026-10-29T18:32:51Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -5198,7 +5198,7 @@
         },
         {
           "t": 1793232000,
-          "c": 1339.02001953
+          "c": 1338.84997559
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -5209,19 +5209,19 @@
       "symbol": "JPYKRW=X",
       "name": "JPY/KRW",
       "currency": "KRW",
-      "price": 845.800018,
+      "price": 846.000004,
       "previous_close": 839.771843,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 6.028175,
-      "change_pct": 0.717835,
+      "change": 6.228161,
+      "change_pct": 0.741649,
       "high_52w": 977.259159,
       "low_52w": 835.094547,
-      "from_52w_high_pct": -13.45182,
+      "from_52w_high_pct": -13.431356,
       "ytd_base_price": 919.34967,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -8.000183,
-      "market_time": "2026-10-29T17:51:42Z",
+      "ytd_price_return_pct": -7.97843,
+      "market_time": "2026-10-29T18:31:43Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -6262,7 +6262,7 @@
         },
         {
           "t": 1793232000,
-          "c": 845.800018
+          "c": 846.000004
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -6274,19 +6274,19 @@
       "symbol": "EURKRW=X",
       "name": "EUR/KRW",
       "currency": "KRW",
-      "price": 1494.69995117,
+      "price": 1494.40002441,
       "previous_close": 1474.64001465,
       "previous_close_date": "2026-10-28",
       "previous_close_source": "previous_completed_daily_close",
-      "change": 20.05993652,
-      "change_pct": 1.360328,
+      "change": 19.76000977,
+      "change_pct": 1.339989,
       "high_52w": 1807.42004395,
       "low_52w": 1433.22998047,
-      "from_52w_high_pct": -17.302015,
+      "from_52w_high_pct": -17.31861,
       "ytd_base_price": 1688.98999023,
       "ytd_base_date": "2025-12-31",
-      "ytd_price_return_pct": -11.503327,
-      "market_time": "2026-10-29T17:51:42Z",
+      "ytd_price_return_pct": -11.521085,
+      "market_time": "2026-10-29T18:31:43Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
         {
@@ -7327,7 +7327,7 @@
         },
         {
           "t": 1793232000,
-          "c": 1494.69995117
+          "c": 1494.40002441
         }
       ],
       "source": "Yahoo Finance chart endpoint",
