@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-11-01T21:43:31Z",
+  "generated_at": "2026-11-01T22:16:59Z",
   "refresh_policy": "GitHub Actions target cadence 5 minutes. GitHub scheduled runs can be delayed; UI marks ETF/FX quotes stale when their market timestamp exceeds 15 minutes.",
   "dynamic_source_note": "Yahoo Finance chart endpoint is an unofficial market-data source and may be delayed or unavailable. Daily change uses the previous completed daily close; YTD uses the previous calendar year's final close. VIX is separately labeled because the public Yahoo/Cboe value can itself be delayed around 15 minutes.",
   "quotes": {
@@ -5185,8 +5185,8 @@
           "c": 1337.97998047
         },
         {
-          "t": 1793568303,
-          "c": 1333.43994141
+          "t": 1793571415,
+          "c": 1333.38000488
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -5212,10 +5212,6 @@
       "market_time": "2026-10-30T21:25:00Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
-        {
-          "t": 1761782400,
-          "c": 932.343388
-        },
         {
           "t": 1761868800,
           "c": 925.244141
@@ -6251,6 +6247,10 @@
         {
           "t": 1793318400,
           "c": 847.339344
+        },
+        {
+          "t": 1793571269,
+          "c": 844.999981
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -6277,10 +6277,6 @@
       "market_time": "2026-10-30T21:25:00Z",
       "exchange_timezone": "Europe/London",
       "history_1y": [
-        {
-          "t": 1761782400,
-          "c": 1651.76000977
-        },
         {
           "t": 1761868800,
           "c": 1647.04003906
@@ -7316,6 +7312,10 @@
         {
           "t": 1793318400,
           "c": 1495.90002441
+        },
+        {
+          "t": 1793571269,
+          "c": 1488.30004883
         }
       ],
       "source": "Yahoo Finance chart endpoint",
@@ -7328,7 +7328,7 @@
       "pe_ttm": 24.0,
       "yield_pct": 1.06,
       "expense_ratio_pct": 0.03,
-      "fetched_at": "2026-11-01T15:56:32Z",
+      "fetched_at": "2026-11-01T22:16:58Z",
       "source": "Yahoo Finance ETF summary page",
       "source_class": "unofficial_fundamentals",
       "definition_note": "P/E Ratio (TTM), Yield, Expense Ratio (net) as published by Yahoo Finance; issuer methodology may differ."
@@ -7338,7 +7338,7 @@
       "pe_ttm": 26.43,
       "yield_pct": 0.43,
       "expense_ratio_pct": 0.15,
-      "fetched_at": "2026-11-01T15:56:32Z",
+      "fetched_at": "2026-11-01T22:16:59Z",
       "source": "Yahoo Finance ETF summary page",
       "source_class": "unofficial_fundamentals",
       "definition_note": "P/E Ratio (TTM), Yield, Expense Ratio (net) as published by Yahoo Finance; issuer methodology may differ."
@@ -7348,7 +7348,7 @@
       "pe_ttm": 19.99,
       "yield_pct": 3.24,
       "expense_ratio_pct": 0.06,
-      "fetched_at": "2026-11-01T15:56:32Z",
+      "fetched_at": "2026-11-01T22:16:59Z",
       "source": "Yahoo Finance ETF summary page",
       "source_class": "unofficial_fundamentals",
       "definition_note": "P/E Ratio (TTM), Yield, Expense Ratio (net) as published by Yahoo Finance; issuer methodology may differ."
